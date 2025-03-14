@@ -1,35 +1,35 @@
 //
-//  ContentView.swift
+//  MainView.swift
 //  Wordy
 //
-//  Created by 양시준 on 3/13/25.
+//  Created by 양시준 on 3/14/25.
 //
 
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct MainView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var wordGroups: [WordGroup]
 
     var body: some View {
         NavigationSplitView {
             List {
-                ForEach(items) { item in
+                ForEach(wordGroups) { wordGroup in
                     NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                        Text("This is \(wordGroup.name)")
                     } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                        Text(wordGroup.name)
                     }
                 }
-                .onDelete(perform: deleteItems)
+                .onDelete(perform: deleteWordGroup)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: addItem) {
+                    Button(action: addWordGroup) {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
@@ -39,23 +39,23 @@ struct ContentView: View {
         }
     }
 
-    private func addItem() {
+    private func addWordGroup() {
         withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
+            let newWordGroup = WordGroup(name: "new word group")
+            modelContext.insert(newWordGroup)
         }
     }
 
-    private func deleteItems(offsets: IndexSet) {
+    private func deleteWordGroup(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
-                modelContext.delete(items[index])
+                modelContext.delete(wordGroups[index])
             }
         }
     }
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+    MainView()
+        .modelContainer(for: WordGroup.self, inMemory: true)
 }
