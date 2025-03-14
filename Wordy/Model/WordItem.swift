@@ -8,7 +8,7 @@
 import SwiftData
 
 @Model
-class WordItem {
+class WordItem: Decodable {
     @Attribute(.unique) var id: String
     var word: String
     var pos: String
@@ -22,9 +22,17 @@ class WordItem {
         self.phonetics = phonetics
         self.senses = senses
     }
+    
+    required init(from: Decoder) throws {
+        id = try from.singleValueContainer().decode(String.self)
+        pos = try from.singleValueContainer().decode(String.self)
+        word = try from.singleValueContainer().decode(String.self)
+        phonetics = try from.singleValueContainer().decode([String].self)
+        senses = try from.singleValueContainer().decode([WordSense].self)
+    }
 }
 
-struct WordSense {
+struct WordSense: Decodable {
     var id: String
     var group: [String]
     var cefr: String
