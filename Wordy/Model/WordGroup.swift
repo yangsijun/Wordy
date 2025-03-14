@@ -14,6 +14,10 @@ class WordGroup {
     @Attribute var name: String
     @Relationship var words: [WordItem] = []
     
+    init(name: String) {
+        self.name = name
+    }
+    
     init(name: String, words: [WordItem]) {
         self.name = name
         self.words = words
