@@ -11,15 +11,15 @@ import SwiftData
 @Model
 class WordGroup {
     @Attribute(.unique) var id: UUID = UUID()
-    @Attribute var name: String
+    @Attribute var title: String
     @Relationship var words: [WordItem] = []
     
-    init(name: String) {
-        self.name = name
+    init(title: String) {
+        self.title = title
     }
     
-    init(name: String, words: [WordItem]) {
-        self.name = name
+    init(title: String, words: [WordItem]) {
+        self.title = title
         self.words = words
     }
     

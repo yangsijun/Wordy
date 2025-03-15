@@ -13,7 +13,7 @@ class WordItem: Decodable {
     var word: String
     var pos: String
     var phonetics: [String]
-    var senses: [WordSense]
+    @Relationship(deleteRule: .cascade) var senses: [WordSense]
     
     init(word_id: String, word: String, pos: String, phonetics: [String], senses: [WordSense]) {
         self.id = word_id

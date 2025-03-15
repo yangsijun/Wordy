@@ -8,18 +8,14 @@
 import SwiftUI
 import SwiftData
 
-public struct InitialDataLoader<T: Decodable> {
-    static func loadJSONIfNeeded(context: ModelContext) {
-        let existingWordsCount = (try? context.fetch(FetchDescriptor<WordItem>()))?.count ?? 0
-        if existingWordsCount > 0 {
-            print("Words already exist. No JSON loading needed.")
-            return
-        }
-        
+public struct InitialDataLoader {
+    static func getInitialDataWordGroups() -> [WordGroup] {
         guard let url = Bundle.main.url(forResource: "oxford-words", withExtension: "json") else {
             print("Can not find oxford-words.json")
-            return
+            return []
         }
+        
+        var initialData: [WordGroup] = []
         
         do {
             let data = try Data(contentsOf: url)
@@ -30,25 +26,26 @@ public struct InitialDataLoader<T: Decodable> {
             var ox5000Words: [WordItem] = []
             
             for word in words {
-                context.insert(word)
                 for group in word.senses[0].group {
                     switch group {
-                        case "ox3000":
-                            ox3000Words.append(word)
-                        case "ox5000":
-                            ox5000Words.append(word)
-                        default:
-                            break
+                    case "Oxford 3000":
+                        ox3000Words.append(word)
+                    case "Oxford 5000":
+                        ox5000Words.append(word)
+                    default:
+                        break
                     }
                 }
             }
             
-            context.insert(WordGroup(name: "Oxford 3000", words: ox3000Words))
-            context.insert(WordGroup(name: "Oxford 5000", words: ox5000Words))
+            let ox3000WordGroup = WordGroup(title: "Oxford 3000", words: ox3000Words)
+            let ox5000WordGroup = WordGroup(title: "Oxford 5000", words: ox5000Words)
             
             print("JSON loaded successfully")
+            initialData = [ox3000WordGroup, ox5000WordGroup]
         } catch {
             print("JSON loading error: \(error)")
         }
+        return initialData
     }
 }

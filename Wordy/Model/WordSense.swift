@@ -10,6 +10,7 @@ import SwiftData
 @Model
 class WordSense: Decodable {
     @Attribute(.unique) var id: String
+    @Relationship(inverse: \WordItem.senses) var word: WordItem?
     var group: [String]
     var cefr: String
     var meaning: String
