@@ -8,9 +8,9 @@
 import SwiftData
 
 @Model
-class WordSense: Decodable {
+class WordSense {
     @Attribute(.unique) var id: String
-    @Relationship(inverse: \WordItem.senses) var word: WordItem?
+    var word: WordItem?
     var group: [String]
     var cefr: String
     var meaning: String
@@ -24,21 +24,12 @@ class WordSense: Decodable {
         case examples
     }
     
-    init(id: String, group: [String], cefr: String, meaning: String, examples: [String] = []) {
+    init(id: String, group: [String], cefr: String, meaning: String, examples: [String]) {
         self.id = id
         self.group = group
         self.cefr = cefr
         self.meaning = meaning
         self.examples = examples
-    }
-    
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(String.self, forKey: .id)
-        group = try container.decode([String].self, forKey: .group)
-        cefr = try container.decode(String.self, forKey: .cefr)
-        meaning = try container.decode(String.self, forKey: .meaning)
-        examples = try container.decode([String].self, forKey: .examples)
     }
     
     func addExample(_ example: String) {

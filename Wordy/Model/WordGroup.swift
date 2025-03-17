@@ -12,7 +12,7 @@ import SwiftData
 class WordGroup {
     @Attribute(.unique) var id: UUID = UUID()
     @Attribute var title: String
-    @Relationship var words: [WordItem] = []
+    @Relationship(inverse: \WordItem.wordGroup) var words: [WordItem] = []
     
     init(title: String) {
         self.title = title
