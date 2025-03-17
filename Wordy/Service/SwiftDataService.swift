@@ -37,4 +37,12 @@ class SwiftDataService {
             fatalError(error.localizedDescription)
         }
     }
+    
+    func removeAllWordGroups() {
+        do {
+            try modelContext.delete(model: WordGroup.self)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
 }

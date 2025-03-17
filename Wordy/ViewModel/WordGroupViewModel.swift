@@ -20,6 +20,7 @@ class WordGroupViewModel: ObservableObject {
     }
     
     func loadInitialData() {
+        dataSource.removeAllWordGroups()
         let initialDataWordGroups = InitialDataLoader.getInitialDataWordGroups()
         for wordGroup in initialDataWordGroups {
             dataSource.addWordGroup(wordGroup)
