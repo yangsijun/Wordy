@@ -6,15 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WordGroupGridView: View {
-    @StateObject private var wordGroupViewModel: WordGroupViewModel = WordGroupViewModel(dataSource: .shared)
+    @Environment(\.modelContext) private var context
+    @Query(sort: \WordGroup.title) var wordGroups: [WordGroup]
     
-    let columns = [GridItem(), GridItem()]
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
         NavigationView {
             LazyVGrid(columns: columns, spacing: 5) {
-                ForEach(wordGroupViewModel.wordGroups) { wordGroup in
+                ForEach(wordGroups) { wordGroup in
                     NavigationLink(destination: WordListView(wordGroup: wordGroup)) {
                         ZStack {
                             Rectangle()
@@ -32,6 +34,6 @@ struct WordGroupGridView: View {
     }
 }
 
-#Preview {
-    WordGroupGridView()
-}
+//#Preview {
+//    WordGroupGridView()
+//}

@@ -6,15 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct OnboardingLastPageView: View {
+    @Environment(\.modelContext) private var context
+    @Query(sort: \WordGroup.title) var wordGroups: [WordGroup]
+    
     let imageName: String
     let title: String
     let subtitle: String
     let backgroundColor: Color
     
-    @StateObject private var wordGroupViewModel: WordGroupViewModel = WordGroupViewModel(dataSource: .shared)
     @Binding var isFirstOnboarding: Bool
+    @State private var isLoading = false
     
     var body: some View {
         VStack {
@@ -27,20 +31,42 @@ struct OnboardingLastPageView: View {
                 .padding()
             Text(subtitle)
                 .font(.title2)
-            
-            Button {
-                wordGroupViewModel.loadInitialData()
-                isFirstOnboarding.toggle()
-            } label: {
-                Text("시작하기")
-                    .bold()
+            if isLoading {
+                ProgressView() // Shows an activity indicator
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .scaleEffect(1.5)
+            } else {
+                Button {
+                    startLoadInitialData()
+                    isFirstOnboarding.toggle()
+                } label: {
+                    Text("시작하기")
+                        .bold()
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(backgroundColor)
     }
+    
+    func loadInitialData() async {
+        let initialDataWordGroups = InitialDataLoader.getInitialDataWordGroups()
+        
+        for wordGroup in initialDataWordGroups {
+            context.insert(wordGroup)
+        }
+    }
+    
+    func startLoadInitialData() {
+        isLoading = true
+
+        Task {
+            await loadInitialData()
+            isLoading = false // Hide progress indicator after task completion
+        }
+    }
 }
 
-#Preview {
-    OnboardingLastPageView(imageName: "person.crop.circle", title: "제목", subtitle: "설명", backgroundColor: .green, isFirstOnboarding: .constant(true))
-}
+//#Preview {
+//    OnboardingLastPageView(imageName: "person.crop.circle", title: "제목", subtitle: "설명", backgroundColor: .green, isFirstOnboarding: .constant(true))
+//}
