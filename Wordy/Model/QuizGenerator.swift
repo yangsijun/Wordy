@@ -1,0 +1,31 @@
+//
+//  QuizGenerator.swift
+//  Wordy
+//
+//  Created by 양시준 on 3/19/25.
+//
+
+struct QuizGenerator {
+    static func generateMultipleChoiceMeaningQuiz(senses: [WordSense]) -> (question: String, options: [String], answer: String)? {
+        guard senses.count >= 4 else { return nil }
+
+        let correctSense: WordSense = senses.randomElement()!
+        let answer: String = correctSense.meaning
+        var options: [String] = [correctSense.meaning]
+        var optionWordList: [WordItem] = [correctSense.word!]
+
+        while options.count < 4 {
+            let randomSense = senses.randomElement()!
+            let randomWord = randomSense.word!
+            let randomMeaning = randomSense.meaning
+            
+            if !options.contains(randomMeaning) && !optionWordList.contains(randomWord) {
+                options.append(randomMeaning)
+                optionWordList.append(randomWord)
+            }
+        }
+
+        options.shuffle()
+        return (question: correctSense.word!.word, options: options, answer: correctSense.meaning)
+    }
+}
