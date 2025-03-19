@@ -63,6 +63,7 @@ struct QuizButtonGroupView: View {
                                 .padding()
                         }
                     }
+                        .disabled(showNextQuestion)
                 }
             }
         }
