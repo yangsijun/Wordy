@@ -63,16 +63,19 @@ struct QuizView: View {
             }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
-            QuizButtonGroupView(
-                quizzes: quizzes,
-                quiz: $quiz,
-                quizIndex: $quizIndex,
-                selectedOption: $selectedOption,
-                isCorrect: $isCorrect,
-                showNextQuestion: $showNextQuestion
-            )
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
+            switch (quiz.type) {
+                case .multipleChoiceMeaning, .multipleChoiceWord:
+                    QuizButtonGroupView(
+                        quizzes: quizzes,
+                        quiz: $quiz,
+                        quizIndex: $quizIndex,
+                        selectedOption: $selectedOption,
+                        isCorrect: $isCorrect,
+                        showNextQuestion: $showNextQuestion
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+            }
         }
     }
 }
@@ -80,11 +83,11 @@ struct QuizView: View {
 #Preview {
     QuizView(
         quizzes: [
-            Quiz(question: "this is a test1", options: ["a", "b", "c", "d"], answer: "a"),
-            Quiz(question: "this is a test2", options: ["a", "b", "c", "d"], answer: "a"),
-            Quiz(question: "this is a test3", options: ["a", "b", "c", "d"], answer: "a"),
-            Quiz(question: "this is a test4", options: ["a", "b", "c", "d"], answer: "a"),
-            Quiz(question: "this is a test5", options: ["a", "b", "c", "d"], answer: "a")
+            Quiz(question: "this is a test1", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning),
+            Quiz(question: "this is a test2", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning),
+            Quiz(question: "this is a test3", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning),
+            Quiz(question: "this is a test4", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning),
+            Quiz(question: "this is a test5", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning)
         ]
     )
 }

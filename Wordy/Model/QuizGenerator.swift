@@ -26,7 +26,7 @@ struct QuizGenerator {
         }
 
         options.shuffle()
-        return Quiz(question: correctSense.word!.word, options: options, answer: answer)
+        return Quiz(question: correctSense.word!.word, options: options, answer: answer, type: QuizType.multipleChoiceMeaning)
     }
     
     static func generateMultipleChoiceWordQuiz(senses: [WordSense]) -> Quiz? {
@@ -45,6 +45,6 @@ struct QuizGenerator {
             }
         }
         options.shuffle()
-        return Quiz(question: correctSense.meaning, options: options, answer: answer)
+        return Quiz(question: correctSense.meaning, options: options, answer: answer, type: QuizType.multipleChoiceWord)
     }
 }

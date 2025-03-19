@@ -9,4 +9,10 @@ struct Quiz {
     var question: String
     var options: [String]
     var answer: String
+    var type: QuizType
+}
+
+enum QuizType: String {
+    case multipleChoiceMeaning
+    case multipleChoiceWord
 }

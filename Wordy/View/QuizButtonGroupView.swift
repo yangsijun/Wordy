@@ -96,13 +96,13 @@ struct QuizButtonGroupView: View {
 #Preview {
     QuizButtonGroupView(
         quizzes: [
-            Quiz(question: "this is a test1", options: ["a", "b", "c", "d"], answer: "a"),
-            Quiz(question: "this is a test2", options: ["a", "b", "c", "d"], answer: "a"),
-            Quiz(question: "this is a test3", options: ["a", "b", "c", "d"], answer: "a"),
-            Quiz(question: "this is a test4", options: ["a", "b", "c", "d"], answer: "a"),
-            Quiz(question: "this is a test5", options: ["a", "b", "c", "d"], answer: "a")
+            Quiz(question: "this is a test1", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceWord),
+            Quiz(question: "this is a test2", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceWord),
+            Quiz(question: "this is a test3", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceWord),
+            Quiz(question: "this is a test4", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceWord),
+            Quiz(question: "this is a test5", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceWord)
         ],
-        quiz: .constant(Quiz(question: "this is a test", options: ["a", "b", "c", "d"], answer: "a")),
+        quiz: .constant(Quiz(question: "this is a test", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceWord)),
         quizIndex: .constant(0),
         selectedOption: .constant(nil),
         isCorrect: .constant(nil),
