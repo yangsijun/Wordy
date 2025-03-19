@@ -6,6 +6,7 @@
 //
 
 import SwiftData
+import Foundation
 
 @Model
 class WordSense {
@@ -15,14 +16,11 @@ class WordSense {
     var cefr: String
     var meaning: String
     var examples: [String]
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case group
-        case cefr
-        case meaning
-        case examples
-    }
+    var lastReviewedAt: Date?
+    var nextReviewAt: Date?
+    var correctCount: Int = 0
+    var incorrectCount: Int = 0
+    var proficiencyLevel: Int = 0
     
     init(id: String, group: [String], cefr: String, meaning: String, examples: [String]) {
         self.id = id
