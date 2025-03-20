@@ -73,7 +73,7 @@ struct QuizButtonGroupView: View {
         selectedOption = option
         isCorrect = option == quiz.answer
         
-        ReviewScheduler.setNextReviewDate(sense: quiz.sense, isCorrect: isCorrect!)
+        quiz.sense.handleReviewResult(isCorrect!)
         
         showNextQuestion = true
         
