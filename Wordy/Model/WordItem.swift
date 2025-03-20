@@ -15,6 +15,7 @@ class WordItem {
     var phonetics: [String]
     @Relationship(deleteRule: .cascade, inverse: \WordSense.word) var senses: [WordSense]?
     var wordGroup: [WordGroup]?
+    var isLearned: Bool = false
     
     init(id: String, word: String, pos: String, phonetics: [String], senses: [WordSense]) {
         self.id = id
