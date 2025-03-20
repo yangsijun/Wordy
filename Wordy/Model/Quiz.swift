@@ -6,6 +6,7 @@
 //
 
 struct Quiz {
+    var sense: WordSense
     var question: String
     var options: [String]
     var answer: String

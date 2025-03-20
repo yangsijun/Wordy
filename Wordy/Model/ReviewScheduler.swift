@@ -8,7 +8,7 @@
 import Foundation
 
 struct ReviewScheduler {
-    static func calculateNextReviewDate(sense: WordSense, isCorrect: Bool) -> Date {
+    static func setNextReviewDate(sense: WordSense, isCorrect: Bool) {
         let calendar = Calendar.current
         let now = Date()
         
@@ -28,6 +28,6 @@ struct ReviewScheduler {
             interval = 12 * 60 * 60 // after 12 hours
         }
         
-        return calendar.date(byAdding: .second, value: Int(interval), to: now) ?? now
+        sense.nextReviewAt = calendar.date(byAdding: .second, value: Int(interval), to: now) ?? now
     }
 }
