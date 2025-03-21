@@ -11,6 +11,7 @@ import SwiftData
 struct WordGroupGridView: View {
     @Environment(\.modelContext) private var context
     @Query(sort: \WordGroup.title) var wordGroups: [WordGroup]
+    @State private var shouldRefresh = false
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
@@ -30,10 +31,11 @@ struct WordGroupGridView: View {
                     }
                 }
             }
+            .id(shouldRefresh)
         }
     }
 }
 
-//#Preview {
-//    WordGroupGridView()
-//}
+#Preview {
+    WordGroupGridView()
+}

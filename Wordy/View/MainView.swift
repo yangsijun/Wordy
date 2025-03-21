@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @AppStorage("isFirstOnboarding") var isFirstOnboarding: Bool = true
+    
 
     var body: some View {
         WordGroupGridView()
