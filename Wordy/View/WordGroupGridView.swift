@@ -15,10 +15,10 @@ struct WordGroupGridView: View {
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
-        NavigationView {
+        NavigationStack {
             LazyVGrid(columns: columns, spacing: 5) {
                 ForEach(wordGroups) { wordGroup in
-                    NavigationLink(destination: WordListView(wordGroup: wordGroup)) {
+                    NavigationLink(destination: WordGroupView(wordGroup: wordGroup)) {
                         ZStack {
                             Rectangle()
                                 .fill(Color.accentColor)
