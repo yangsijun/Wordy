@@ -6,16 +6,24 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
     @AppStorage("isFirstOnboarding") var isFirstOnboarding: Bool = true
-    
+    @Query var wordGroups: [WordGroup]
 
     var body: some View {
-        WordGroupGridView()
-            .fullScreenCover(isPresented: $isFirstOnboarding) {
-                OnboardingTabView(isFirstOnboarding: $isFirstOnboarding)
+        TabView {
+            Tab("Words", systemImage: "character.book.closed.fill") {
+                WordGroupGridView()
             }
+            Tab("Learn", systemImage: "book.fill") {
+                LearnView(wordGroup: wordGroups.first!)
+            }
+        }
+//        .fullScreenCover(isPresented: $isFirstOnboarding) {
+//            OnboardingTabView(isFirstOnboarding: $isFirstOnboarding)
+//        }
     }
 }
 
