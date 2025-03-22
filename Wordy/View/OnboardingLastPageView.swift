@@ -55,6 +55,12 @@ struct OnboardingLastPageView: View {
         for wordGroup in initialDataWordGroups {
             context.insert(wordGroup)
         }
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error saving initial data: \(error)")
+        }
     }
     
     func startLoadInitialData() {

@@ -10,22 +10,20 @@ import SwiftData
 
 @main
 struct WordyApp: App {
-    var modelContainer: ModelContainer
-    
-    init() {
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([WordGroup.self, WordItem.self, WordSense.self])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
-            let schema = Schema([WordGroup.self, WordItem.self, WordSense.self])
-            let modelConfiguration = ModelConfiguration(schema: schema)
-            modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
             fatalError(error.localizedDescription)
         }
-    }
+    }()
     
     var body: some Scene {
         WindowGroup {
             MainView()
-                .modelContainer(modelContainer)
+                .modelContainer(sharedModelContainer)
         }
     }
 }
