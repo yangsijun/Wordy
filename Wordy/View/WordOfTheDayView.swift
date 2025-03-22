@@ -12,21 +12,19 @@ struct WordOfTheDayView: View {
     var words: [WordItem]
     
     var body: some View {
-        VStack {
-            Text("Today's Words")
-                .font(.largeTitle)
-                .bold()
-                .padding()
-            
+//        VStack {
             List(words, id: \.id) { word in
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(word.word)
-                            .font(.title2)
-                            .bold()
+                        Button(action: {
+                            SpeechManager.shared.speak(word.word)
+                        }) {
+                            Text(word.word)
+                                .font(.title2)
+                                .bold()
+                        }
+                        .buttonStyle(.plain)
                         Text(word.pos)
-                            .font(.caption)
-                        
                     }
                     HStack {
                         Button(action: {
@@ -36,7 +34,6 @@ struct WordOfTheDayView: View {
                         }
                         .buttonStyle(BorderlessButtonStyle())
                         Text(word.phonetics[0])
-                            .font(.caption)
                     }
                     .padding(.bottom, 2)
                     ForEach(word.senses!.indices, id: \.self) { idx in
@@ -45,32 +42,37 @@ struct WordOfTheDayView: View {
                             Text(String(idx+1) + ".")
                                 .bold()
                             VStack(alignment: .leading) {
-                                Text(sense.meaning)
-                                    .bold()
-                                Divider()
+                                Button(action: {
+                                    SpeechManager.shared.speak(sense.meaning)
+                                }) {
+                                    Text(sense.meaning)
+                                        .bold()
+                                }
+                                .buttonStyle(.plain)
                                 ForEach(sense.examples, id: \.self) { example in
-                                    HStack(alignment: .top) {
-                                        Text("•")
-                                        Text(example)
-                                            .italic(true)
+                                    Button(action: {
+                                        SpeechManager.shared.speak(example)
+                                    }) {
+                                        HStack(alignment: .top) {
+                                            Text("•")
+                                            Text(example)
+                                                .italic(true)
+                                        }
                                     }
+                                    .buttonStyle(.plain)
+                                    .padding(1)
                                 }
                             }
                         }
                     }
+                    .padding(.vertical, 5)
                 }
+                .navigationTitle("Today's Word")
+                .navigationBarTitleDisplayMode(.large)
             }
             
-            Button(action: {}) {
-                Text("Start Quiz")
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            .padding()
-        }
+            
+//        }
     }
 }
 
