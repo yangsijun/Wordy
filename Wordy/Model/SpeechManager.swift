@@ -16,7 +16,8 @@ class SpeechManager {
     
     func speak(_ text: String) {
         let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-GB")
+        let voices = AVSpeechSynthesisVoice.speechVoices()
+        utterance.voice = voices.first(where: { $0.language == "en-GB" && $0.name == "Jamie" && $0.quality == .premium}) ?? AVSpeechSynthesisVoice(language: "en-GB")        
         
         synthesizer.speak(utterance)
     }
