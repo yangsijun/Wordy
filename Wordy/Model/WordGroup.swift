@@ -13,6 +13,8 @@ class WordGroup {
     @Attribute(.unique) var id: UUID = UUID()
     @Attribute var title: String
     @Relationship(inverse: \WordItem.wordGroup) var words: [WordItem] = []
+    var wordsOfTheDay: [WordItem] = []
+    var wordsOfTheDayTimestamp: Date?
     
     init(title: String) {
         self.title = title
@@ -32,8 +34,11 @@ class WordGroup {
     }
     
     func getWordsOfTheDay() -> [WordItem] {
+        if wordsOfTheDayTimestamp != nil && Calendar.current.isDateInToday(wordsOfTheDayTimestamp!) {
+            return wordsOfTheDay
+        }
+        
         var filteredWords: [WordItem] = []
-        var wordsOfTheDay: [WordItem] = []
         
         for word in words {
             if !word.isLearned {
@@ -49,6 +54,8 @@ class WordGroup {
                 wordsOfTheDay.append(filteredWords[randomIndex])
             }
         }
+        
+        wordsOfTheDayTimestamp = Date()
         
         return wordsOfTheDay
     }
