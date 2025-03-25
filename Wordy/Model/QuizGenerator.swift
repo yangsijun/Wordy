@@ -6,10 +6,11 @@
 //
 
 struct QuizGenerator {
-    static func generateMultipleChoiceMeaningQuiz(senses: [WordSense]) -> Quiz? {
+    static func generateMultipleChoiceMeaningQuiz(senses: [WordSense], answerSense: WordSense?) -> Quiz? {
         guard senses.count >= 4 else { return nil }
+        
+        let correctSense: WordSense = answerSense ?? senses.randomElement()!
 
-        let correctSense: WordSense = senses.randomElement()!
         let answer: String = correctSense.meaning
         var options: [String] = [correctSense.meaning]
         var optionWordList: [WordItem] = [correctSense.word!]
@@ -29,10 +30,10 @@ struct QuizGenerator {
         return Quiz(sense: correctSense, question: correctSense.word!.word, options: options, answer: answer, type: QuizType.multipleChoiceMeaning)
     }
     
-    static func generateMultipleChoiceWordQuiz(senses: [WordSense]) -> Quiz? {
+    static func generateMultipleChoiceWordQuiz(senses: [WordSense], answerSense: WordSense?) -> Quiz? {
         guard senses.count >= 4 else { return nil }
         
-        let correctSense: WordSense = senses.randomElement()!
+        let correctSense: WordSense = answerSense ?? senses.randomElement()!
         let answer: String = correctSense.word!.word
         var options: [String] = [correctSense.word!.word]
         

@@ -59,4 +59,27 @@ class WordGroup {
         
         return wordsOfTheDay
     }
+    
+    func getWordQuizzes(learningWords: [WordItem]) -> [Quiz]? {
+        var allSenses: [WordSense] = []
+        for word in words {
+            allSenses.append(contentsOf: word.senses!)
+        }
+        
+        var learningSenses: [WordSense] = []
+        for word in learningWords {
+            learningSenses.append(contentsOf: word.senses!)
+        }
+        
+        var quizzes: [Quiz] = []
+        for sense in learningSenses {
+            let quiz = QuizGenerator.generateMultipleChoiceWordQuiz(senses: allSenses, answerSense: sense)
+            if quiz == nil {
+                return nil
+            }
+            quizzes.append(QuizGenerator.generateMultipleChoiceWordQuiz(senses: allSenses, answerSense: sense)!)
+        }
+        
+        return quizzes
+    }
 }

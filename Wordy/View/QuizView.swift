@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct QuizView: View {
-    var quizzes: [Quiz]
+    var quizzes: [Quiz]?
     @State var quiz: Quiz
     @State var quizIndex: Int = 0
     
     @State private var selectedOption: String? = nil
     @State private var isCorrect: Bool? = nil
     @State private var showNextQuestion = false
+    
+    var invalid: Bool = false
     
     
     let correctMessages = [
@@ -33,40 +35,50 @@ struct QuizView: View {
         "Close, but no cigar! 🎭 On to the next one."
     ]
     
-    init (quizzes: [Quiz]) {
-        self.quizzes = quizzes
-        self.quiz = quizzes[0]
-        self.quizIndex = 0
+    init (quizzes: [Quiz]?) {
+        if quizzes == nil {
+            invalid = true
+            self.quiz = Quiz(sense: WordSense(id: "test_1", group: ["ox3000"], cefr: "a2", meaning: "Test Meaning 1", examples: ["example1", "example2"]), question: "this is a test1", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning)
+        } else {
+            self.quizzes = quizzes
+            self.quiz = quizzes![0]
+            self.quizIndex = 0
+        }
     }
     
     var body: some View {
         VStack {
-            ZStack(alignment: .top) {
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color(UIColor.systemFill), lineWidth: 2)
-                    .background(.thinMaterial)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .overlay(
-                        Text(quiz.question)
-                            .font(.largeTitle)
-                    )
-                if (showNextQuestion) {
-                    VStack {
-                        Spacer()
-                            .frame(height: 50)
-                        Text(isCorrect == true ? correctMessages.randomElement()! : incorrectMessages.randomElement()!)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 40)
-                            .frame(width: .infinity, alignment: .center)
+            if invalid {
+                Text("The quiz cannot be created because the number of words stored in the WordGroup is too small.")
+            } else {
+                ZStack(alignment: .top) {
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color(UIColor.systemFill), lineWidth: 2)
+                        .background(.thinMaterial)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .overlay(
+                            Text(quiz.question)
+                                .font(.largeTitle)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                        )
+                    if (showNextQuestion) {
+                        VStack {
+                            Spacer()
+                                .frame(height: 50)
+                            Text(isCorrect == true ? correctMessages.randomElement()! : incorrectMessages.randomElement()!)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 40)
+                                .frame(width: .infinity, alignment: .center)
+                        }
                     }
                 }
-            }
                 .padding(.horizontal, 20)
                 .padding(.vertical, 10)
-            switch (quiz.type) {
+                switch (quiz.type) {
                 case .multipleChoiceMeaning, .multipleChoiceWord:
                     QuizButtonGroupView(
-                        quizzes: quizzes,
+                        quizzes: quizzes!,
                         quiz: $quiz,
                         quizIndex: $quizIndex,
                         selectedOption: $selectedOption,
@@ -75,6 +87,7 @@ struct QuizView: View {
                     )
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
+                }
             }
         }
     }
