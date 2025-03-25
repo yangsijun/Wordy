@@ -18,12 +18,12 @@ struct MainView: View {
                 WordGroupGridView()
             }
             Tab("Learn", systemImage: "book.fill") {
-                LearnView(wordGroup: wordGroups.first!)
+                LearnView(wordGroup: wordGroups.first)
             }
         }
-//        .fullScreenCover(isPresented: $isFirstOnboarding) {
-//            OnboardingTabView(isFirstOnboarding: $isFirstOnboarding)
-//        }
+        .fullScreenCover(isPresented: $isFirstOnboarding) {
+            OnboardingTabView(isFirstOnboarding: $isFirstOnboarding)
+        }
     }
 }
 
