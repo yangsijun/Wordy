@@ -19,16 +19,18 @@ struct LearnView: View {
             if wordGroup == nil {
                 Text("There are not any word group")
             } else {
-                WordOfTheDayView(words: wordGroup!.getWordsOfTheDay())
-                Button(action: {}) {
-                    Text("Start Quiz")
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
+                ScrollView {
+                    WordOfTheDayView(words: wordGroup!.getWordsOfTheDay())
+                    Button(action: {}) {
+                        Text("Start Quiz")
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding()                    
                 }
-                .padding()
             }
         }
     }

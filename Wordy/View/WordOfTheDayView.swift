@@ -10,69 +10,25 @@ import SwiftData
 
 struct WordOfTheDayView: View {
     var words: [WordItem]
+    @State var wordIndex: Int = 0
     
     var body: some View {
-//        VStack {
-            List(words, id: \.id) { word in
-                VStack(alignment: .leading) {
-                    HStack {
-                        Button(action: {
-                            SpeechManager.shared.speak(word.word)
-                        }) {
-                            Text(word.word)
-                                .font(.title2)
-                                .bold()
-                        }
-                        .buttonStyle(.plain)
-                        Text(word.pos)
-                    }
-                    HStack {
-                        Button(action: {
-                            SpeechManager.shared.speak(word.word)
-                        }) {
-                            Image(systemName: "speaker.fill")
-                        }
-                        .buttonStyle(BorderlessButtonStyle())
-                        Text(word.phonetics[0])
-                    }
-                    .padding(.bottom, 2)
-                    ForEach(word.senses!.indices, id: \.self) { idx in
-                        let sense = word.senses![idx]
-                        HStack(alignment: .top) {
-                            Text(String(idx+1) + ".")
-                                .bold()
-                            VStack(alignment: .leading) {
-                                Button(action: {
-                                    SpeechManager.shared.speak(sense.meaning)
-                                }) {
-                                    Text(sense.meaning)
-                                        .bold()
-                                }
-                                .buttonStyle(.plain)
-                                ForEach(sense.examples, id: \.self) { example in
-                                    Button(action: {
-                                        SpeechManager.shared.speak(example)
-                                    }) {
-                                        HStack(alignment: .top) {
-                                            Text("•")
-                                            Text(example)
-                                                .italic(true)
-                                        }
-                                    }
-                                    .buttonStyle(.plain)
-                                    .padding(1)
-                                }
-                            }
-                        }
-                    }
-                    .padding(.vertical, 5)
+        VStack {
+            WordItemCardView(word: words[wordIndex])
+            HStack {
+                Button(action: { wordIndex -= 1 }) {
+                    Image(systemName: "chevron.left")
                 }
-                .navigationTitle("Today's Word")
-                .navigationBarTitleDisplayMode(.large)
+                .disabled(wordIndex == 0)
+                Text(String(wordIndex + 1) + " / " + String(words.count))
+                    .foregroundColor(Color(UIColor.secondaryLabel))
+                Button(action: { wordIndex += 1 }) {
+                    Image(systemName: "chevron.right")
+                }
+                .disabled(wordIndex == words.count - 1)
             }
-            
-            
-//        }
+            .padding(5)
+        }
     }
 }
 
@@ -100,8 +56,8 @@ struct WordOfTheDayView: View {
                 ]
             ),
             WordItem(
-                id: "abandon_1",
-                word: "abandon",
+                id: "bandon_1",
+                word: "bandon",
                 pos: "verb",
                 phonetics: ["/əˈbændən/"],
                 senses: [
