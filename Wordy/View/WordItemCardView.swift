@@ -65,22 +65,42 @@ struct WordItemCardView: View {
 
 #Preview {
     WordItemCardView(
+//        word: WordItem(
+//            id: "abandon_1",
+//            word: "abandon",
+//            pos: "verb",
+//            phonetics: ["/əˈbændən/"],
+//            senses: [
+//                WordSense(
+//                    id: "abandon_sng_1",
+//                    group: ["ox3000"],
+//                    cefr: "b2",
+//                    meaning: "to leave somebody, especially somebody you are responsible for, with no intention of returning",
+//                    examples: [
+//                        "The baby had been abandoned by its mother.",
+//                        "People often simply abandon their pets when they go abroad.",
+//                        "‘We have been abandoned to our fate,’ said one resident.",
+//                        "The study showed a deep fear among the elderly of being abandoned to the care of strangers."
+//                    ]
+//                )
+//            ]
+//        )
         word: WordItem(
-            id: "abandon_1",
-            word: "abandon",
-            pos: "verb",
-            phonetics: ["/əˈbændən/"],
+            id: "her_1",
+            word: "her",
+            pos: "pronoun",
+            phonetics: ["/hə(r)/"],
             senses: [
                 WordSense(
-                    id: "abandon_sng_1",
-                    group: ["ox3000"],
-                    cefr: "b2",
-                    meaning: "to leave somebody, especially somebody you are responsible for, with no intention of returning",
+                    id: "her_sng_1",
+                    group: ["ox5000"],
+                    cefr: "a1",
+                    meaning: "used as the object of a verb, after the verb be or after a preposition to refer to a woman or girl who has already been mentioned or is easily identified",
                     examples: [
-                        "The baby had been abandoned by its mother.",
-                        "People often simply abandon their pets when they go abroad.",
-                        "‘We have been abandoned to our fate,’ said one resident.",
-                        "The study showed a deep fear among the elderly of being abandoned to the care of strangers."
+                        "We're going to call her Sophie.",
+                        "Please give her my regards.",
+                        "The manager will be free soon-you can wait for her here.",
+                        "That must be her now."
                     ]
                 )
             ]

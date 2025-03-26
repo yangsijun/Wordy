@@ -37,6 +37,7 @@ struct WordItemCardExamplesView: View {
                             Text("•")
                             Text(example)
                                 .italic(true)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
                     .buttonStyle(.plain)
@@ -49,11 +50,17 @@ struct WordItemCardExamplesView: View {
 
 #Preview {
     WordItemCardExamplesView(
+//        examples: [
+//            "The baby had been abandoned by its mother.",
+//            "People often simply abandon their pets when they go abroad.",
+//            "‘We have been abandoned to our fate,’ said one resident.",
+//            "The study showed a deep fear among the elderly of being abandoned to the care of strangers."
+//        ]
         examples: [
-            "The baby had been abandoned by its mother.",
-            "People often simply abandon their pets when they go abroad.",
-            "‘We have been abandoned to our fate,’ said one resident.",
-            "The study showed a deep fear among the elderly of being abandoned to the care of strangers."
+            "We're going to call her Sophie.",
+            "Please give her my regards.",
+            "The manager will be free soon-you can wait for her here.",
+            "That must be her now."
         ]
     )
 }
