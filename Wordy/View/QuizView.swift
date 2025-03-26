@@ -11,6 +11,8 @@ struct QuizView: View {
     var quizzes: [Quiz]?
     @State var quiz: Quiz
     @State var quizIndex: Int = 0
+    @State var quizResult: [Bool] = []
+    @State var isEnded: Bool = false
     
     @State private var selectedOption: String? = nil
     @State private var isCorrect: Bool? = nil
@@ -51,42 +53,64 @@ struct QuizView: View {
             if invalid {
                 Text("The quiz cannot be created because the number of words stored in the WordGroup is too small.")
             } else {
-                ZStack(alignment: .top) {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color(UIColor.systemFill), lineWidth: 2)
-                        .background(.thinMaterial)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .overlay(
-                            Text(quiz.question)
-                                .font(.largeTitle)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                        )
-                    if (showNextQuestion) {
+                if isEnded {
+                    ScrollView {
                         VStack {
-                            Spacer()
-                                .frame(height: 50)
-                            Text(isCorrect == true ? correctMessages.randomElement()! : incorrectMessages.randomElement()!)
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, 40)
-                                .frame(width: .infinity, alignment: .center)
+                            ForEach(0..<quizzes!.count, id: \.self) { index in
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color(UIColor.secondarySystemBackground))
+                                    .frame(maxWidth: .infinity, minHeight: 80)
+                                    .overlay(
+                                        HStack {
+                                            Text(quizzes![index].answer)
+                                                .padding()
+                                            Text(quizResult[index] ? "✅" : "❌")
+                                                .padding()
+                                        }
+                                    )                            }
+                        }
+                        .padding(20)
+                    }
+                } else {
+                    ZStack(alignment: .top) {
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(Color(UIColor.systemFill), lineWidth: 2)
+                            .background(.thinMaterial)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .overlay(
+                                Text(quiz.question)
+                                    .font(.largeTitle)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                            )
+                        if (showNextQuestion) {
+                            VStack {
+                                Spacer()
+                                    .frame(height: 50)
+                                Text(isCorrect == true ? correctMessages.randomElement()! : incorrectMessages.randomElement()!)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 40)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
                         }
                     }
-                }
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
-                switch (quiz.type) {
-                case .multipleChoiceMeaning, .multipleChoiceWord:
-                    QuizButtonGroupView(
-                        quizzes: quizzes!,
-                        quiz: $quiz,
-                        quizIndex: $quizIndex,
-                        selectedOption: $selectedOption,
-                        isCorrect: $isCorrect,
-                        showNextQuestion: $showNextQuestion
-                    )
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
+                    switch (quiz.type) {
+                        case .multipleChoiceMeaning, .multipleChoiceWord:
+                            QuizButtonGroupView(
+                                quizzes: quizzes!,
+                                quiz: $quiz,
+                                quizIndex: $quizIndex,
+                                quizResult: $quizResult,
+                                isEnded: $isEnded,
+                                selectedOption: $selectedOption,
+                                isCorrect: $isCorrect,
+                                showNextQuestion: $showNextQuestion
+                            )
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                    }
                 }
             }
         }

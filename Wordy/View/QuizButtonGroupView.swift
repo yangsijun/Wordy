@@ -12,6 +12,8 @@ struct QuizButtonGroupView: View {
     var quizzes: [Quiz]
     @Binding var quiz: Quiz
     @Binding var quizIndex: Int
+    @Binding var quizResult: [Bool]
+    @Binding var isEnded: Bool
     
     @Binding var selectedOption: String?
     @Binding var isCorrect: Bool?
@@ -71,7 +73,8 @@ struct QuizButtonGroupView: View {
     
     func handleAnswer(_ option: String) {
         selectedOption = option
-        isCorrect = option == quiz.answer
+        isCorrect = selectedOption! == quiz.answer
+        quizResult.append(isCorrect!)
         
         quiz.sense.handleReviewResult(isCorrect!)
         
@@ -90,8 +93,10 @@ struct QuizButtonGroupView: View {
         quizIndex += 1
         if quizIndex >= quizzes.count {
             quizIndex = 0
+            isEnded = true
+        } else {
+            quiz = quizzes[quizIndex]
         }
-        quiz = quizzes[quizIndex]
     }
 }
 
@@ -107,6 +112,8 @@ struct QuizButtonGroupView: View {
         ],
         quiz: .constant(Quiz(sense: WordSense(id: "test_1", group: ["ox3000"], cefr: "a2", meaning: "Test Meaning 1", examples: ["example1", "example2"]), question: "this is a test1", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning)),
         quizIndex: .constant(0),
+        quizResult: .constant([]),
+        isEnded: .constant(false),
         selectedOption: .constant(nil),
         isCorrect: .constant(nil),
         showNextQuestion: .constant(false)
