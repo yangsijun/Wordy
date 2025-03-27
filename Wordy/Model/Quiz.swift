@@ -11,6 +11,8 @@ struct Quiz {
     var options: [String]
     var answer: String
     var type: QuizType
+    var selectedOption: String?
+    var result: Bool?
 }
 
 enum QuizType: String {

@@ -32,7 +32,7 @@ struct WordOfTheDayView: View {
                     }
                     .disabled(wordIndex == 0)
                     if wordIndex == words.count - 1 {
-                        NavigationLink(destination: QuizView(quizzes: wordGroup.getWordQuizzes(learningWords: words))) {
+                        NavigationLink(destination: QuizView(quizzes: wordGroup.getWordQuizzes(learningWords: words) ?? [])) {
                             Text("Start Quiz")
                                 .padding()
                                 .frame(maxWidth: .infinity)
