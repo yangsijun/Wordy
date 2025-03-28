@@ -31,17 +31,17 @@ struct QuizView: View {
         "Close, but no cigar! 🎭 On to the next one."
     ]
     
-    init (quizzes: [Quiz]) {
-        self.quizzes = quizzes
-        self.quizIndex = 0
-        if quizzes.isEmpty {
-            self.invalid = true
-        }
-    }
+//    init (quizzes: [Quiz]) {
+//        self.quizzes = quizzes
+//        self.quizIndex = 0
+//        if quizzes.isEmpty {
+//            self.invalid = true
+//        }
+//    }
     
     var body: some View {
         VStack {
-            if invalid {
+            if quizzes.isEmpty {
                 Text("The quiz cannot be created because the number of words stored in the WordGroup is too small.")
             } else {
                 if quizIndex < quizzes.count {
@@ -55,8 +55,7 @@ struct QuizView: View {
 }
 
 #Preview {
-    QuizView(
-        quizzes: [
+    QuizView(        quizzes: [
             Quiz(sense: WordSense(id: "test_1", group: ["ox3000"], cefr: "a2", meaning: "Test Meaning 1", examples: ["example1", "example2"]), question: "this is a test1", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning),
             Quiz(sense: WordSense(id: "test_2", group: ["ox3000"], cefr: "a2", meaning: "Test Meaning 2", examples: ["example3", "example4"]), question: "this is a test2", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning),
             Quiz(sense: WordSense(id: "test_3", group: ["ox3000"], cefr: "a2", meaning: "Test Meaning 3", examples: ["example5", "example6"]), question: "this is a test3", options: ["a", "b", "c", "d"], answer: "a", type: .multipleChoiceMeaning),

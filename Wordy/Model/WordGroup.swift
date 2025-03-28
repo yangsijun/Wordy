@@ -38,6 +38,7 @@ class WordGroup {
             return wordsOfTheDay
         }
         
+        wordsOfTheDay = []
         var filteredWords: [WordItem] = []
         
         for word in words {

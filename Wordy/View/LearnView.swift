@@ -15,22 +15,18 @@ struct LearnView: View {
     @State var isShowDeleteWordGroupView: Bool = false
     
     var body: some View {
-        VStack {
-            if wordGroup == nil {
-                Text("There are not any word group")
-            } else {
-//                ScrollView {
-                WordOfTheDayView(wordGroup: wordGroup!, words: wordGroup!.getWordsOfTheDay())
-//                }
-//                Button(action: {}) {
-//                    Text("Start Quiz")
-//                        .padding()
-//                        .frame(maxWidth: .infinity)
-//                        .background(Color.blue)
-//                        .foregroundColor(.white)
-//                        .cornerRadius(10)
-//                }
-//                .padding()
+        NavigationStack {
+            List {
+                if wordGroup == nil {
+                    Text("There are not any word group")
+                } else {
+                    NavigationLink(destination: WordOfTheDayView(wordGroup: wordGroup!, words: wordGroup!.getWordsOfTheDay())) {
+                        Text("Words Of The Day")
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .foregroundColor(Color(UIColor.label))
+                    }
+                }
             }
         }
     }

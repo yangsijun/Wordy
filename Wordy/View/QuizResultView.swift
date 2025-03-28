@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct QuizResultView: View {
+    @Environment(\.dismiss) var dismiss
+    
     var quizzes: [Quiz]
     
     var body: some View {
@@ -34,6 +36,17 @@ struct QuizResultView: View {
                 }
             }
         }
+        Button(action: {
+            dismiss()
+        }) {
+            Text("Done")
+                .padding()
+                .frame(maxWidth: .infinity)
+                .foregroundColor(.white)
+                .background(.blue)
+                .cornerRadius(10)
+        }
+        .padding(.horizontal)
     }
 }
 
