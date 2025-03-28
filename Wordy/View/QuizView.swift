@@ -16,32 +16,25 @@ struct QuizView: View {
     var invalid: Bool = false
     
     var body: some View {
-        VStack {
-            ZStack {
-                HStack {
-                    Button(action: {
-                        showQuiz = false
-                    }) {
-                        Image(systemName: "xmark")
-                            .foregroundColor(Color(UIColor.secondaryLabel))
-                    }
-                    Spacer()
-                }
-                Text("Quiz")
-                    .font(.headline)
-            }
-            .background(Color.clear)
-            .padding(.horizontal, 20)
-            .padding(.vertical, 10)
-            if quizzes.isEmpty {
-                Text("The quiz cannot be created because the number of words stored in the WordGroup is too small.")
-            } else {
-                if quizIndex < quizzes.count {
-                    QuizProblemView(quiz: $quizzes[quizIndex], quizIndex: $quizIndex, showNextQuestion: $showNextQuestion)
+        NavigationStack {
+            VStack {
+                if quizzes.isEmpty {
+                    Text("The quiz cannot be created because the number of words stored in the WordGroup is too small.")
                 } else {
-                    QuizResultView(showQuiz: $showQuiz, quizzes: quizzes)
+                    if quizIndex < quizzes.count {
+                        QuizProblemView(quiz: $quizzes[quizIndex], quizIndex: $quizIndex, showNextQuestion: $showNextQuestion)
+                    } else {
+                        QuizResultView(showQuiz: $showQuiz, quizzes: quizzes)
+                    }
                 }
             }
+            .navigationBarTitle("Quiz", displayMode: .inline)
+            .navigationBarItems(leading: Button(action: {
+                showQuiz = false
+            }) {
+                Image(systemName: "xmark")
+                    .foregroundColor(.black)
+            })
         }
     }
 }

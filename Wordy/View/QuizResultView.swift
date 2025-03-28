@@ -15,32 +15,29 @@ struct QuizResultView: View {
     var quizzes: [Quiz]
     
     var body: some View {
-        NavigationStack {
-            List {
-                ForEach(0..<quizzes.count, id: \.self) { index in
-                    NavigationLink(
-                        destination: ScrollView { WordItemCardView(word: quizzes[index].sense.word) }
-                    ) {
-                        HStack {
-                            Text(quizzes[index].answer)
-                            Spacer()
-                            if quizzes[index].result! {
-                                Text("Correct")
-                                    .foregroundColor(Color(UIColor.systemTeal))
-                                    .padding(.trailing)
-                            } else {
-                                Text("Incorrect")
-                                    .foregroundColor(Color(UIColor.systemOrange))
-                                    .padding(.trailing)
-                            }
+        List {
+            ForEach(0..<quizzes.count, id: \.self) { index in
+                NavigationLink(
+                    destination: ScrollView { WordItemCardView(word: quizzes[index].sense.word) }
+                ) {
+                    HStack {
+                        Text(quizzes[index].answer)
+                        Spacer()
+                        if quizzes[index].result! {
+                            Text("Correct")
+                                .foregroundColor(Color(UIColor.systemTeal))
+                                .padding(.trailing)
+                        } else {
+                            Text("Incorrect")
+                                .foregroundColor(Color(UIColor.systemOrange))
+                                .padding(.trailing)
                         }
                     }
                 }
             }
-            .navigationTitle("Quiz Result")
         }
+        .navigationBarTitle("Quiz Result", displayMode: .inline)
         Button(action: {
-            dismiss()
             showQuiz = false
         }) {
             Text("Done")
