@@ -10,6 +10,8 @@ import SwiftUI
 struct QuizResultView: View {
     @Environment(\.dismiss) var dismiss
     
+    @Binding var showQuiz: Bool
+    
     var quizzes: [Quiz]
     
     var body: some View {
@@ -35,9 +37,11 @@ struct QuizResultView: View {
                     }
                 }
             }
+            .navigationTitle("Quiz Result")
         }
         Button(action: {
             dismiss()
+            showQuiz = false
         }) {
             Text("Done")
                 .padding()
@@ -52,6 +56,7 @@ struct QuizResultView: View {
 
 #Preview {
     QuizResultView(
+        showQuiz: .constant(true),
         quizzes: [
             Quiz(sense: WordSense(id: "test_1", group: ["ox3000"], cefr: "a2", meaning: "Test Meaning 1", examples: ["example1", "example2"]), question: "this is a test1", options: ["abandon", "b", "c", "d"], answer: "abandon", type: .multipleChoiceMeaning, selectedOption: "abandon", result: true),
             Quiz(sense: WordSense(id: "test_2", group: ["ox3000"], cefr: "a2", meaning: "Test Meaning 2", examples: ["example3", "example4"]), question: "this is a test2", options: ["ability", "b", "c", "d"], answer: "ability", type: .multipleChoiceMeaning, selectedOption: "ability", result: true),

@@ -37,7 +37,7 @@ struct QuizButtonGroupView: View {
                         handleAnswer(option)
                     }) {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 5)
+                            RoundedRectangle(cornerRadius: 10)
                                 .fill(
                                     option == quiz.answer
                                         ? Color(UIColor.systemTeal).opacity(0.3)

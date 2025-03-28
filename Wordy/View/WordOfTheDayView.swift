@@ -12,6 +12,7 @@ struct WordOfTheDayView: View {
     var wordGroup: WordGroup
     var words: [WordItem]
     @State var wordIndex: Int = 0
+    @State var showQuiz: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -32,13 +33,29 @@ struct WordOfTheDayView: View {
                     }
                     .disabled(wordIndex == 0)
                     if wordIndex == words.count - 1 {
-                        NavigationLink(destination: QuizView(quizzes: wordGroup.getWordQuizzes(learningWords: words) ?? [])) {
+//                        NavigationLink(destination: QuizView(quizzes: wordGroup.getWordQuizzes(learningWords: words) ?? [])) {
+//                            Text("Start Quiz")
+//                                .padding()
+//                                .frame(maxWidth: .infinity)
+//                                .foregroundColor(.white)
+//                                .background(.blue)
+//                                .cornerRadius(10)
+//                        }
+                        Button(action: {
+                            wordIndex = 0
+                            showQuiz = true
+                        }) {
                             Text("Start Quiz")
                                 .padding()
                                 .frame(maxWidth: .infinity)
                                 .foregroundColor(.white)
                                 .background(.blue)
                                 .cornerRadius(10)
+                        }
+//                        .navigationDestination(isPresented: $showQuiz) { QuizView(showQuiz: $showQuiz, quizzes: wordGroup.getWordQuizzes(learningWords: words) ?? [])
+//                        }
+                        .fullScreenCover(isPresented: $showQuiz) {
+                            QuizView(quizzes: wordGroup.getWordQuizzes(learningWords: words) ?? [], showQuiz: $showQuiz)
                         }
                     } else {
                         Button(action: {

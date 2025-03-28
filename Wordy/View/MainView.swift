@@ -18,7 +18,7 @@ struct MainView: View {
                 WordGroupGridView()
             }
             Tab("Learn", systemImage: "book.fill") {
-                LearnView(wordGroup: wordGroups.first)
+                LearnView(wordGroups: wordGroups)
             }
         }
         .fullScreenCover(isPresented: $isFirstOnboarding) {
