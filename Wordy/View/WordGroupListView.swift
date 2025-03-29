@@ -24,7 +24,7 @@ struct WordGroupListView: View {
                     }
                 }
             }
-            .navigationTitle(Text("Word Groups"))
+            .navigationTitle(Text("Words"))
             .id(shouldRefresh)
         }
     }
