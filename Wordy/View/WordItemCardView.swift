@@ -17,25 +17,19 @@ struct WordItemCardView: View {
         } else {
             VStack(alignment: .leading) {
                 HStack {
-                    Button(action: {
-                        SpeechManager.shared.speak(word!.word)
-                    }) {
-                        Text(word!.word)
-                            .font(.title)
-                            .bold()
-                    }
-                    .buttonStyle(.plain)
+                    TextSpeechButton(text: word!.word)
+                        .font(.title)
+                        .bold()
                     Text(word!.pos)
                 }
-                HStack {
-                    Button(action: {
-                        SpeechManager.shared.speak(word!.word)
-                    }) {
+                TextSpeechButton(
+                    text: word!.word,
+                    content: HStack {
                         Image(systemName: "speaker.fill")
+                            .foregroundColor(.blue)
+                        Text(word!.phonetics[0])
                     }
-                    .buttonStyle(BorderlessButtonStyle())
-                    Text(word!.phonetics[0])
-                }
+                )
                 .padding(.bottom, 5)
                 Divider()
                 ForEach(word!.senses!.indices, id: \.self) { idx in
@@ -44,13 +38,8 @@ struct WordItemCardView: View {
                         Text(String(idx+1) + ".")
                             .bold()
                         VStack(alignment: .leading) {
-                            Button(action: {
-                                SpeechManager.shared.speak(sense.meaning)
-                            }) {
-                                Text(sense.meaning)
-                                    .bold()
-                            }
-                            .buttonStyle(.plain)
+                            TextSpeechButton(text: sense.meaning)
+                                .bold()
                             WordItemCardExamplesView(examples: sense.examples)
                                 .padding(.top, 2)
                         }

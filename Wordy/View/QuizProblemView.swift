@@ -35,12 +35,11 @@ struct QuizProblemView: View {
                 .background(.thinMaterial)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .overlay(
-                    Text(quiz.question)
+                    TextSpeechButton(text: quiz.question)
                         .font(.title)
                         .frame(maxWidth: .infinity)
                         .padding()
                 )
-            .buttonStyle(.plain)
             
             if (showNextQuestion) {
                 VStack {

@@ -9,12 +9,23 @@ import SwiftUI
 
 struct TextSpeechButton: View {
     var text: String
+    var content: any View
+    
+    init(text: String) {
+        self.text = text
+        self.content = Text(text)
+    }
+    
+    init(text: String, content: any View) {
+        self.text = text
+        self.content = content
+    }
     
     var body: some View {
         Button(action: {
             SpeechManager.shared.speak(text)
         }) {
-            Text(text)
+            AnyView(content)
         }
         .buttonStyle(.plain)
     }

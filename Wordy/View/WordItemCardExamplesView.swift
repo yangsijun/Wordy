@@ -30,17 +30,12 @@ struct WordItemCardExamplesView: View {
             
             if isExpanded {
                 ForEach(examples, id: \.self) { example in
-                    Button(action: {
-                        SpeechManager.shared.speak(example)
-                    }) {
-                        HStack(alignment: .top) {
-                            Text("•")
-                            Text(example)
-                                .italic(true)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
+                    HStack(alignment: .top) {
+                        Text("•")
+                        TextSpeechButton(text: example)
+                            .italic()
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    .buttonStyle(.plain)
                     .padding(1)
                 }
             }
