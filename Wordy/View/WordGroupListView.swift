@@ -20,7 +20,7 @@ struct WordGroupListView: View {
                     NavigationLink(destination: WordGroupView(wordGroup: wordGroup)) {
                         Text(wordGroup.title)
                             .font(.headline)
-                            .padding(.vertical, 10)
+                            .padding(.vertical)
                     }
                 }
             }
