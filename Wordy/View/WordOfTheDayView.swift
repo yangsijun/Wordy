@@ -44,7 +44,7 @@ struct WordOfTheDayView: View {
                                 .cornerRadius(10)
                         }
                         .fullScreenCover(isPresented: $showQuiz) {
-                            QuizView(quizzes: wordGroup.getWordQuizzes(learningWords: words) ?? [], showQuiz: $showQuiz)
+                            QuizView(quizzes: wordGroup.getMultipleChoiceWordQuizzes(learningWords: words) ?? [], showQuiz: $showQuiz)
                         }
                     } else {
                         Button(action: {

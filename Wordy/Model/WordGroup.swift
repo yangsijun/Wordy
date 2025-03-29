@@ -50,10 +50,7 @@ class WordGroup {
         if filteredWords.count < 10 {
             wordsOfTheDay = filteredWords
         } else {
-            for _ in 0..<10 {
-                let randomIndex = Int.random(in: 0..<filteredWords.count)
-                wordsOfTheDay.append(filteredWords[randomIndex])
-            }
+            wordsOfTheDay = Array(filteredWords).shuffled().prefix(10).map { $0 }
         }
         
         wordsOfTheDayTimestamp = Date()
@@ -61,7 +58,7 @@ class WordGroup {
         return wordsOfTheDay
     }
     
-    func getWordQuizzes(learningWords: [WordItem]) -> [Quiz]? {
+    func getMultipleChoiceWordQuizzes(learningWords: [WordItem]) -> [Quiz]? {
         var allSenses: [WordSense] = []
         for word in words {
             allSenses.append(contentsOf: word.senses!)
@@ -81,6 +78,34 @@ class WordGroup {
             quizzes.append(QuizGenerator.generateMultipleChoiceWordQuiz(senses: allSenses, answerSense: sense)!)
         }
         
+        quizzes.shuffle()
+        
         return quizzes
     }
+    
+    func getMultipleChoiceMeaningQuizzes(learningWords: [WordItem]) -> [Quiz]? {
+        var allSenses: [WordSense] = []
+        for word in words {
+            allSenses.append(contentsOf: word.senses!)
+        }
+        
+        var learningSenses: [WordSense] = []
+        for word in learningWords {
+            learningSenses.append(contentsOf: word.senses!)
+        }
+        
+        var quizzes: [Quiz] = []
+        for sense in learningSenses {
+            let quiz = QuizGenerator.generateMultipleChoiceMeaningQuiz(senses: allSenses, answerSense: sense)
+            if quiz == nil {
+                return nil
+            }
+            quizzes.append(QuizGenerator.generateMultipleChoiceMeaningQuiz(senses: allSenses, answerSense: sense)!)
+        }
+        
+        quizzes.shuffle()
+        
+        return quizzes
+    }
+
 }
