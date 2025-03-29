@@ -18,7 +18,10 @@ struct QuizResultView: View {
         List {
             ForEach(0..<quizzes.count, id: \.self) { index in
                 NavigationLink(
-                    destination: ScrollView { WordItemCardView(word: quizzes[index].sense.word) }
+                    destination: ScrollView {
+                        WordItemCardView(word: quizzes[index].sense.word)
+                            .padding()
+                    }
                 ) {
                     HStack {
                         Text(quizzes[index].answer)
