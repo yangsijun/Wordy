@@ -15,7 +15,7 @@ struct MainView: View {
     var body: some View {
         TabView {
             Tab("Words", systemImage: "character.book.closed.fill") {
-                WordGroupGridView()
+                WordGroupListView()
             }
             Tab("Learn", systemImage: "book.fill") {
                 LearnView(wordGroups: wordGroups)
