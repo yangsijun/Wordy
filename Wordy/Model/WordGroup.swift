@@ -16,6 +16,9 @@ class WordGroup {
     var wordsOfTheDay: [WordItem] = []
     var wordsOfTheDayTimestamp: Date?
     
+    var reviewSenses: [WordSense] = []
+    var reviewWords: [WordItem] = []
+    
     init(title: String) {
         self.title = title
     }
@@ -58,24 +61,61 @@ class WordGroup {
         return wordsOfTheDay
     }
     
-    func getQuizzes(learningWords: [WordItem], quizType: QuizType) -> [Quiz]? {
+    func getReviewSenses() -> [WordSense] {
+        reviewSenses = []
+        
+        for word in words {
+            if word.isLearned {
+                for sense in word.senses! {
+                    if sense.nextReviewAt! < Date() {
+                        reviewSenses.append(sense)
+                    }
+                }
+            }
+        }
+        
+        return reviewSenses
+    }
+    
+    func getReviewWords() -> [WordItem] {
+        reviewWords = []
+        
+        for word in words {
+            if word.isLearned {
+                for sense in word.senses! {
+                    if sense.nextReviewAt! < Date() {
+                        reviewWords.append(word)
+                        break
+                    }
+                }
+            }
+        }
+        
+        return reviewWords
+    }
+    
+    
+    func getQuizzesFromWords(learningWords: [WordItem], quizType: QuizType) -> [Quiz]? {
+        var learningSenses: [WordSense] = []
+        for word in words {
+            learningSenses.append(contentsOf: word.senses!)
+        }
+        return getQuizzesFromSenses(learningSenses: learningSenses, quizType: quizType)
+    }
+    
+    func getQuizzesFromSenses(learningSenses: [WordSense], quizType: QuizType) -> [Quiz]? {
         switch quizType {
             case .multipleChoiceWord:
-                return getMultipleChoiceWordQuizzes(learningWords: learningWords)
+                return getMultipleChoiceWordQuizzes(learningSenses: learningSenses)
             case .multipleChoiceMeaning:
-                return getMultipleChoiceMeaningQuizzes(learningWords: learningWords)
+                return getMultipleChoiceMeaningQuizzes(learningSenses: learningSenses)
         }
     }
     
-    private func getMultipleChoiceWordQuizzes(learningWords: [WordItem]) -> [Quiz]? {
+    private func getMultipleChoiceWordQuizzes(learningSenses: [WordSense]) -> [Quiz]? {
         var allSenses: [WordSense] = []
         for word in words {
             allSenses.append(contentsOf: word.senses!)
-        }
-        
-        var learningSenses: [WordSense] = []
-        for word in learningWords {
-            learningSenses.append(contentsOf: word.senses!)
         }
         
         var quizzes: [Quiz] = []
@@ -92,15 +132,10 @@ class WordGroup {
         return quizzes
     }
     
-    private func getMultipleChoiceMeaningQuizzes(learningWords: [WordItem]) -> [Quiz]? {
+    private func getMultipleChoiceMeaningQuizzes(learningSenses: [WordSense]) -> [Quiz]? {
         var allSenses: [WordSense] = []
         for word in words {
             allSenses.append(contentsOf: word.senses!)
-        }
-        
-        var learningSenses: [WordSense] = []
-        for word in learningWords {
-            learningSenses.append(contentsOf: word.senses!)
         }
         
         var quizzes: [Quiz] = []

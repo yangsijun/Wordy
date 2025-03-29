@@ -41,16 +41,30 @@ struct LearnView: View {
                         }
                         Section {
                             if wordGroups.first(where: { $0.title == selectedWordGroupTitle }) != nil {
-                                NavigationLink(destination: LearningWordsView(wordGroup: selectedWordGroup!, words: selectedWordGroup!.getWordsOfTheDay(), quizType: .multipleChoiceWord)) {
+                                NavigationLink(
+                                    destination: LearningWordsView(
+                                        wordGroup: selectedWordGroup!,
+                                        words: selectedWordGroup!.getWordsOfTheDay(),
+                                        quizType: .multipleChoiceWord
+                                    )
+                                ) {
                                     Text("Words Of The Day")
                                         .font(.headline)
                                         .padding(.vertical)
                                 }
-                                NavigationLink(destination: LearningWordsView(wordGroup: selectedWordGroup!, words: selectedWordGroup!.getWordsOfTheDay(), quizType: .multipleChoiceMeaning)) {
-                                    Text("Review")
+                                NavigationLink(
+                                    destination: LearningWordsView(
+                                        wordGroup: selectedWordGroup!,
+                                        words: selectedWordGroup!.getReviewWords(),
+                                        senses: selectedWordGroup!.getReviewSenses(),
+                                        quizType: .multipleChoiceMeaning
+                                    )
+                                ) {
+                                    Text("Revision")
                                         .font(.headline)
                                         .padding(.vertical)
                                 }
+                                .disabled(selectedWordGroup!.getReviewWords().isEmpty)
                             }
                         }
                     }
