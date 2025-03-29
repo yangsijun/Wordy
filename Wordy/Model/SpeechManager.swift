@@ -12,7 +12,13 @@ class SpeechManager {
     
     private let synthesizer = AVSpeechSynthesizer()
     
-    private init() {}
+    private init() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+        } catch {
+            print("AVAudioSession error: \(error)")
+        }
+    }
     
     func speak(_ text: String) {
         let utterance = AVSpeechUtterance(string: text)
