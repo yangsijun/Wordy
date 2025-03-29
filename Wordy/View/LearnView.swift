@@ -41,8 +41,15 @@ struct LearnView: View {
                         }
                         Section {
                             if wordGroups.first(where: { $0.title == selectedWordGroupTitle }) != nil {
-                                NavigationLink(destination: WordOfTheDayView(wordGroup: selectedWordGroup!, words: selectedWordGroup!.getWordsOfTheDay())) {
+                                NavigationLink(destination: LearningWordsView(wordGroup: selectedWordGroup!, words: selectedWordGroup!.getWordsOfTheDay())) {
                                     Text("Words Of The Day")
+                                        .font(.headline)
+                                        .padding(.vertical)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .foregroundColor(Color(UIColor.label))
+                                }
+                                NavigationLink(destination: LearningWordsView(wordGroup: selectedWordGroup!, words: selectedWordGroup!.getWordsOfTheDay())) {
+                                    Text("Review")
                                         .font(.headline)
                                         .padding(.vertical)
                                         .frame(maxWidth: .infinity, alignment: .leading)

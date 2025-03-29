@@ -1,14 +1,14 @@
 //
-//  WordOfTheDayView.swift
+//  LearningWordsView.swift
 //  Wordy
 //
-//  Created by 양시준 on 3/20/25.
+//  Created by 양시준 on 3/29/25.
 //
 
 import SwiftUI
 import SwiftData
 
-struct WordOfTheDayView: View {
+struct LearningWordsView: View {
     var wordGroup: WordGroup
     var words: [WordItem]
     @State var wordIndex: Int = 0
@@ -66,7 +66,7 @@ struct WordOfTheDayView: View {
 }
 
 #Preview {
-    WordOfTheDayView(
+    LearningWordsView(
         wordGroup: WordGroup(
             title: "Oxford",
             words: [
