@@ -11,6 +11,7 @@ import SwiftData
 struct LearningWordsView: View {
     var wordGroup: WordGroup
     var words: [WordItem]
+    var quizType: QuizType
     @State var wordIndex: Int = 0
     @State var showQuiz: Bool = false
     
@@ -44,7 +45,7 @@ struct LearningWordsView: View {
                                 .cornerRadius(10)
                         }
                         .fullScreenCover(isPresented: $showQuiz) {
-                            QuizView(quizzes: wordGroup.getMultipleChoiceWordQuizzes(learningWords: words) ?? [], showQuiz: $showQuiz)
+                            QuizView(quizzes: wordGroup.getQuizzes(learningWords: words, quizType: quizType) ?? [], showQuiz: $showQuiz)
                         }
                     } else {
                         Button(action: {
@@ -153,6 +154,7 @@ struct LearningWordsView: View {
                     )
                 ]
             )
-        ]
+        ],
+        quizType: .multipleChoiceWord
     )
 }

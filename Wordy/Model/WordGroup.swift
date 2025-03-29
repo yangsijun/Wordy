@@ -58,7 +58,16 @@ class WordGroup {
         return wordsOfTheDay
     }
     
-    func getMultipleChoiceWordQuizzes(learningWords: [WordItem]) -> [Quiz]? {
+    func getQuizzes(learningWords: [WordItem], quizType: QuizType) -> [Quiz]? {
+        switch quizType {
+            case .multipleChoiceWord:
+                return getMultipleChoiceWordQuizzes(learningWords: learningWords)
+            case .multipleChoiceMeaning:
+                return getMultipleChoiceMeaningQuizzes(learningWords: learningWords)
+        }
+    }
+    
+    private func getMultipleChoiceWordQuizzes(learningWords: [WordItem]) -> [Quiz]? {
         var allSenses: [WordSense] = []
         for word in words {
             allSenses.append(contentsOf: word.senses!)
@@ -83,7 +92,7 @@ class WordGroup {
         return quizzes
     }
     
-    func getMultipleChoiceMeaningQuizzes(learningWords: [WordItem]) -> [Quiz]? {
+    private func getMultipleChoiceMeaningQuizzes(learningWords: [WordItem]) -> [Quiz]? {
         var allSenses: [WordSense] = []
         for word in words {
             allSenses.append(contentsOf: word.senses!)

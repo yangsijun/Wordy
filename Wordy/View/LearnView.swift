@@ -41,19 +41,15 @@ struct LearnView: View {
                         }
                         Section {
                             if wordGroups.first(where: { $0.title == selectedWordGroupTitle }) != nil {
-                                NavigationLink(destination: LearningWordsView(wordGroup: selectedWordGroup!, words: selectedWordGroup!.getWordsOfTheDay())) {
+                                NavigationLink(destination: LearningWordsView(wordGroup: selectedWordGroup!, words: selectedWordGroup!.getWordsOfTheDay(), quizType: .multipleChoiceWord)) {
                                     Text("Words Of The Day")
                                         .font(.headline)
                                         .padding(.vertical)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .foregroundColor(Color(UIColor.label))
                                 }
-                                NavigationLink(destination: LearningWordsView(wordGroup: selectedWordGroup!, words: selectedWordGroup!.getWordsOfTheDay())) {
+                                NavigationLink(destination: LearningWordsView(wordGroup: selectedWordGroup!, words: selectedWordGroup!.getWordsOfTheDay(), quizType: .multipleChoiceMeaning)) {
                                     Text("Review")
                                         .font(.headline)
                                         .padding(.vertical)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .foregroundColor(Color(UIColor.label))
                                 }
                             }
                         }
