@@ -15,7 +15,10 @@ struct OnboardingLastPageView: View {
     let imageName: String
     let title: String
     let subtitle: String
+    let foregroundColor: Color
     let backgroundColor: Color
+    let buttonTintColor: Color
+    let buttonForegroundColor: Color
     
     @Binding var isFirstOnboarding: Bool
     @State private var isLoading = false
@@ -28,9 +31,12 @@ struct OnboardingLastPageView: View {
             Text(title)
                 .bold()
                 .font(.largeTitle)
+                .multilineTextAlignment(.center)
                 .padding()
             Text(subtitle)
                 .font(.title2)
+                .multilineTextAlignment(.center)
+                .padding()
             if isLoading {
                 ProgressView() // Shows an activity indicator
                     .progressViewStyle(CircularProgressViewStyle())
@@ -40,12 +46,16 @@ struct OnboardingLastPageView: View {
                     startLoadInitialData()
                     isFirstOnboarding.toggle()
                 } label: {
-                    Text("시작하기")
+                    Text("Let’s get started!")
                         .bold()
                 }
+                .buttonStyle(.borderedProminent)
+                .tint(buttonTintColor)
+                .foregroundColor(buttonForegroundColor)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foregroundColor(foregroundColor)
         .background(backgroundColor)
     }
     
@@ -73,6 +83,15 @@ struct OnboardingLastPageView: View {
     }
 }
 
-//#Preview {
-//    OnboardingLastPageView(imageName: "person.crop.circle", title: "제목", subtitle: "설명", backgroundColor: .green, isFirstOnboarding: .constant(true))
-//}
+#Preview {
+    OnboardingLastPageView(
+        imageName: "house",
+        title: "Boost Your Memory with Spaced Repetition",
+        subtitle: "Review words at optimal intervals to reinforce long-term retention.\nLearn faster and forget less!",
+        foregroundColor: .white,
+        backgroundColor: Color(red: 1/255, green: 33/255, blue: 105/255),
+        buttonTintColor: .white,
+        buttonForegroundColor: Color(red: 200/255, green: 16/255, blue: 46/255),
+        isFirstOnboarding: .constant(true)
+    )
+}

@@ -13,23 +13,29 @@ struct OnboardingTabView: View {
     var body: some View {
         TabView {
             OnboardingPageView(
-                imageName: "person.3.fill",
-                title: "title 1",
-                subtitle: "앱 설명 1",
-                backgroundColor: .blue
+                imageName: "character.book.closed.fill",
+                title: "Welcome to Wordy!",
+                subtitle: "Master British English vocabulary and boost your IELTS score with smart learning techniques.",
+                foregroundColor: Color(red: 1/255, green: 33/255, blue: 105/255),
+                backgroundColor: .white
             )
             OnboardingPageView(
-                imageName: "note.text.badge.plus",
-                title: "title 2",
-                subtitle: "앱 설명 2",
-                backgroundColor: .red
+                imageName: "waveform.circle.fill",
+                title: "Learn words with British pronunciations!",
+                subtitle: "Click on a word, definition, or example text to hear the British pronunciation.",
+                foregroundColor: Color(red: 200/255, green: 16/255, blue: 46/255),
+                backgroundColor: .white
             )
-            
             OnboardingLastPageView(
-                imageName: "house",
-                title: "title 3",
-                subtitle: "앱 설명 3",
-                backgroundColor: .green,
+                imageName: "brain.fill",
+                title: "Boost Your Memory with Spaced Repetition",
+                subtitle: "Review words at optimal intervals to reinforce long-term retention.\nLearn faster and forget less!",
+                foregroundColor: Color(red: 1/255, green: 33/255, blue: 105/255),
+                backgroundColor: .white,
+                buttonTintColor:
+                Color(red: 200/255, green: 16/255, blue: 46/255),
+                buttonForegroundColor:
+                        .white,
                 isFirstOnboarding: $isFirstOnboarding
             )
         }

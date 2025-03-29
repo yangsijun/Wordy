@@ -11,6 +11,7 @@ struct OnboardingPageView: View {
     let imageName: String
     let title: String
     let subtitle: String
+    let foregroundColor: Color
     let backgroundColor: Color
     
     var body: some View {
@@ -21,15 +22,25 @@ struct OnboardingPageView: View {
             Text(title)
                 .bold()
                 .font(.largeTitle)
+                .multilineTextAlignment(.center)
                 .padding()
             Text(subtitle)
                 .font(.title2)
+                .multilineTextAlignment(.center)
+                .padding()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foregroundColor(foregroundColor)
         .background(backgroundColor)
     }
 }
 
 #Preview {
-    OnboardingPageView(imageName: "person.3.fill", title: "제목", subtitle: "설명", backgroundColor: .blue)
+    OnboardingPageView(
+        imageName: "character.book.closed.fill",
+        title: "Welcome to Wordy!",
+        subtitle: "Master British English vocabulary and boost your IELTS score with smart learning techniques.",
+        foregroundColor: .white,
+        backgroundColor: Color(red: 1/255, green: 33/255, blue: 105/255)
+    )
 }
