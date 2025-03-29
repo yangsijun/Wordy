@@ -47,6 +47,8 @@ struct LearnView: View {
                                         words: selectedWordGroup!.getWordsOfTheDay(),
                                         quizType: .multipleChoiceWord
                                     )
+                                        .navigationTitle(Text("Words Of The Day"))
+                                        .navigationBarTitleDisplayMode(.inline)
                                 ) {
                                     Text("Words Of The Day")
                                         .font(.headline)
@@ -59,6 +61,8 @@ struct LearnView: View {
                                         senses: selectedWordGroup!.getReviewSenses(),
                                         quizType: .multipleChoiceMeaning
                                     )
+                                        .navigationTitle(Text("Revision"))
+                                        .navigationBarTitleDisplayMode(.inline)
                                 ) {
                                     Text("Revision")
                                         .font(.headline)
