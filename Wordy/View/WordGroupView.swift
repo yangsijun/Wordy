@@ -17,7 +17,17 @@ struct WordGroupView: View {
             List(
                 searchQueryString.isEmpty
                   ? wordGroup.words.sorted(by: { $0.id < $1.id })
-                  : wordGroup.words.filter { $0.word.localizedStandardContains(searchQueryString) }.sorted(by: { $0.id < $1.id }),
+                : wordGroup.words
+                    .filter { $0.word.localizedStandardContains(searchQueryString) }
+                    .sorted {
+                        let firstWordStarts = $0.word.lowercased().hasPrefix(searchQueryString.lowercased())
+                        let secondWordStarts = $1.word.lowercased().hasPrefix(searchQueryString.lowercased())
+                        if firstWordStarts == secondWordStarts {
+                            return $0.word < $1.word
+                        }
+                        return firstWordStarts
+                    }
+                ,
                 id: \.id
             ) { word in
                 NavigationLink(destination: WordView(word: word)) {
@@ -31,12 +41,13 @@ struct WordGroupView: View {
             }
             .navigationTitle(wordGroup.title)
             .navigationBarTitleDisplayMode(.large)
+            .searchable(
+                text: $searchQueryString,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text("Search")
+            )
+            .autocapitalization(.none)
         }
-        .searchable(
-            text: $searchQueryString,
-            placement: .navigationBarDrawer(displayMode: .always),
-            prompt: Text("Search")
-        )
     }
 }
 
