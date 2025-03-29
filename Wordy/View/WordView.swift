@@ -15,25 +15,19 @@ struct WordView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 HStack {
-                    Button(action: {
-                        SpeechManager.shared.speak(word.word)
-                    }) {
-                        Text(word.word)
-                            .font(.largeTitle)
-                            .bold()
-                    }
-                    .buttonStyle(.plain)
+                    TextSpeechButton(text: word.word)
+                        .font(.largeTitle)
+                        .bold()
                     Text(word.pos)
                 }
-                HStack {
-                    Button(action: {
-                        SpeechManager.shared.speak(word.word)
-                    }) {
+                TextSpeechButton(
+                    text: word.word,
+                    content: HStack {
                         Image(systemName: "speaker.fill")
+                            .foregroundColor(.blue)
+                        Text(word.phonetics[0])
                     }
-                    .buttonStyle(BorderlessButtonStyle())
-                    Text(word.phonetics[0])
-                }
+                )
                 .padding(.bottom, 2)
                 ForEach(word.senses!.indices, id: \.self) { idx in
                     let sense = word.senses![idx]
@@ -41,24 +35,15 @@ struct WordView: View {
                         Text(String(idx+1) + ".")
                             .bold()
                         VStack(alignment: .leading) {
-                            Button(action: {
-                                SpeechManager.shared.speak(sense.meaning)
-                            }) {
-                                Text(sense.meaning)
-                                    .bold()
-                            }
-                            .buttonStyle(.plain)
+                            TextSpeechButton(text: sense.meaning)
+                                .bold()
                             ForEach(sense.examples, id: \.self) { example in
-                                Button(action: {
-                                    SpeechManager.shared.speak(example)
-                                }) {
-                                    HStack(alignment: .top) {
-                                        Text("•")
-                                        Text(example)
-                                            .italic(true)
-                                    }
+                                HStack(alignment: .top) {
+                                    Text("•")
+                                    TextSpeechButton(text: example)
+                                        .italic()
+                                        .fixedSize(horizontal: false, vertical: true)
                                 }
-                                .buttonStyle(.plain)
                                 .padding(1)
                             }
                         }
